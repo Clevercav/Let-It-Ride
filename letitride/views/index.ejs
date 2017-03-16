@@ -1,11 +1,130 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+   <head>
+      <title>Simple Map</title>
+      <meta name="viewport" content="width=device-width" content="initial-scale=1.0">
+      <meta charset="utf-8">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.4.2/angular-ui-router.js"></script>
+      <script src="/javascripts/angularApp.js"></script>
+      <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+   </head>
+   <body ng-app="letitride">
+      <nav class ="navbar navbar-inverse">
+         <div class = "container-fluid">
+            <!-- Logo-->
+            <div class = "navbar-header">
+               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNavBar">
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               </button>
+               <a href="#" class="navbar-brand">Let It Ride </a>
+            </div>
+            <!-- Menu Items -->
+            <div class="collapse navbar-collapse" id="mainNavBar" ng-controller="NavCtrl">
+               <ul class="nav navbar-nav">
+                  <li class="active"><a href="#">Home</a></li>
+                  <li><a href="#about">About</a></li>
+                  <li><a href="#contact">Contact</a></li>
+               </ul>
+               <ul class="nav navbar-nav pull-right">
+                  <li ng-show="isLoggedIn()"><a>{{ currentUser() }}</a></li>
+                  <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
+                  <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
+                  <li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
+               </ul>
+            </div>
+         </div>
+      </nav>
+
+      <ui-view></ui-view>
+
+      <!-- HOME -->
+      <script type="text/ng-template" id="/home.html">
+         <div class="jumbotron text-center">
+             <h1>Welcome to LET IT RIDE</h1>
+             <p>We are not an uber clone</p>
+         </div>
+         <input type="text" placeholder="Search address">
+         <div id="map"></div>
+         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRsRxSy0tifmCIR3QhMRIKFDpydVZEO2k&callback=initMap"
+                 async defer>
+                 
+      </script>
+      <div class="container"></div>
+      </script>
+
+      <!-- REGISTER -->
+      <script type="text/ng-template" id="/register.html">
+         
+         <div ng-show="error" class="alert alert-danger row">
+           <span>{{ error.message }}</span>
+         </div>
+         
+         <form ng-submit="register()"
+           style="margin-top:30px;">
+           <h3>Register</h3>
+         
+           <div class="form-group">
+             <input type="text"
+             class="form-control"
+             placeholder="Username"
+             ng-model="user.username"></input>
+           </div>
+           <div class="form-group">
+             <input type="password"
+             class="form-control"
+             placeholder="Password"
+             ng-model="user.password"></input>
+           </div>
+           <button type="submit" class="btn btn-primary">Register</button>
+         </form>
+      </script>
+
+      <!-- LOGIN -->
+      <script type="text/ng-template" id="/login.html">
+         
+         <div ng-show="error" class="alert alert-danger row">
+           <span>{{ error.message }}</span>
+         </div>
+         
+         <form ng-submit="logIn()"
+           style="margin-top:30px;">
+           <h3>Log In</h3>
+         
+           <div class="form-group">
+             <input type="text"
+             class="form-control"
+             placeholder="Username"
+             ng-model="user.username"></input>
+           </div>
+           <div class="form-group">
+             <input type="password"
+             class="form-control"
+             placeholder="Password"
+             ng-model="user.password"></input>
+           </div>
+           <button type="submit" class="btn btn-primary">Log In</button>
+         </form>
+      </script>
+   </body>
 </html>
+<!-- <div class="row">
+   <div class="col-sm-4">
+       <h3>Column 1</h3>
+       <p>Privacy</p>
+   </div>
+   <div class="col-sm-4">
+       <h3>Column 2</h3>
+       <p>Terms and conditions</p>
+   </div>
+   <div class="col-sm-4">
+       <h3>Column 3</h3>
+       <p>More stuff</p>
+   </div>
+   </div> -->
