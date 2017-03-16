@@ -1,9 +1,18 @@
 var app = angular.module('letitride', ['ui.router']);
 
-app.controller('MainCtrl', ['$scope', '$stateParams', 'auth', function ($scope, $stateParams, posts, auth) {
-  $scope.isLoggedIn = auth.isLoggedIn;
+
+//MAIN CONTROLLER 
+app.controller('MainCtrl', ['$scope', '$stateParams', 'auth', function ($scope, $stateParams, auth) {
+    $scope.isLoggedIn = auth.isLoggedIn;
 }]);
 
+//RIDE CONTROLLER
+app.controller('RideCtrl', ['$scope', '$stateParams', 'auth', function ($scope, $stateParams, auth) {
+    $scope.isLoggedIn = auth.isLoggedIn;
+    initMap();
+}]);
+
+//AUTHENTICATION CONTROLLER
 app.controller('AuthCtrl', [
     '$scope',
     '$state',
@@ -28,6 +37,7 @@ app.controller('AuthCtrl', [
         };
     }]);
 
+//NAVIGATION CONTROLLER
 app.controller('NavCtrl', [
     '$scope',
     'auth',
@@ -37,6 +47,7 @@ app.controller('NavCtrl', [
         $scope.logOut = auth.logOut;
     }]);
 
+//AUTHENTICATION FACTORY
 app.factory('auth', ['$http', '$window', function ($http, $window) {
     var auth = {};
 
@@ -47,7 +58,7 @@ app.factory('auth', ['$http', '$window', function ($http, $window) {
     };
 
     auth.logOut = function () {
-        $window.localStorage.removeItem('flapper-news-token');
+        $window.localStorage.removeItem('letitride-token');
     };
 
     auth.register = function (user) {
@@ -78,16 +89,17 @@ app.factory('auth', ['$http', '$window', function ($http, $window) {
     };
 
     auth.saveToken = function (token) {
-        $window.localStorage['flapper-news-token'] = token;
+        $window.localStorage['letitride-token'] = token;
     };
 
     auth.getToken = function () {
-        return $window.localStorage['flapper-news-token'];
+        return $window.localStorage['letitride-token'];
     }
 
     return auth;
 }]);
 
+//STATES
 app.config(['$stateProvider', '$urlRouterProvider',
     function ($stateProvider, $urlRouterProvider) {
         $stateProvider
@@ -96,13 +108,18 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 templateUrl: '/home.html',
                 controller: 'MainCtrl'
             })
+            .state('ride', {
+                url: '/ride',
+                templateUrl: '/ride.html',
+                controller: 'RideCtrl'
+            })
             .state('login', {
                 url: '/login',
                 templateUrl: '/login.html',
                 controller: 'AuthCtrl',
                 onEnter: ['$state', 'auth', function ($state, auth) {
                     if (auth.isLoggedIn()) {
-                        $state.go('home');
+                        $state.go('ride');
                     }
                 }]
             })
@@ -119,10 +136,36 @@ app.config(['$stateProvider', '$urlRouterProvider',
         $urlRouterProvider.otherwise('home');
     }]);
 
-var map;
 function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: 37.279518, lng: -121.867905 },
-        zoom: 15
+    var map = new google.maps.Map(angular.element(document.getElementById('map')), {
+        center: { lat: -34.397, lng: 150.644 },
+        zoom: 6
     });
+    var infoWindow = new google.maps.InfoWindow({ map: map });
+
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('Location found.');
+            map.setCenter(pos);
+        }, function () {
+            handleLocationError(true, infoWindow, map.getCenter());
+        });
+    } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+    }
+}
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(browserHasGeolocation ?
+        'Error: The Geolocation service failed.' :
+        'Error: Your browser doesn\'t support geolocation.');
 }
