@@ -1,13 +1,39 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    background-color: lightblue;
 }
 
 a {
   color: #00B7FF;
 }
+/* pac-input is the searchbox */
+#pac-input {
+    background-color: #fff;
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+    margin-left: 12px;
+    padding: 0 11px 0 13px;
+    text-overflow: ellipsis;
+    width: 400px;
+}
 
+#pac-input:focus {
+    border-color: #4d90fe;
+}
 
+/* Background image not working...*/
+.jumbotron{
+    background-image: url("../../img/img2.jpg");
+    margin-top:-20px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
+    text-shadow: black 0.3em 0.3em 0.3em;
+    text-align:center;
+    background-color: lightcoral;
+}
 /* Always set the map height explicitly to define the size of the div
          * element that contains the map. */
         #map {
