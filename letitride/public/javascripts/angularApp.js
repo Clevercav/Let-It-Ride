@@ -137,15 +137,15 @@ app.config(['$stateProvider', '$urlRouterProvider',
     }]);
 
 function initMap() {
-    var map = new google.maps.Map(angular.element(document.getElementById('map')), {
-        center: { lat: -34.397, lng: 150.644 },
+    var map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 36.778259, lng: -119.417931}, //CA coordinates
         zoom: 6
     });
-    var infoWindow = new google.maps.InfoWindow({ map: map });
 
-    // Try HTML5 geolocation.
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
+    //Geolocation stuff
+    var infoWindow = new google.maps.InfoWindow({map: map});
+    if (navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(function(position) {
             var pos = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
@@ -154,14 +154,51 @@ function initMap() {
             infoWindow.setPosition(pos);
             infoWindow.setContent('Location found.');
             map.setCenter(pos);
-        }, function () {
+
+        }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
         });
     } else {
-        // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
     }
+
+    //Search Function stuff
+    var searchBox = new google.maps.places.SearchBox(document.getElementById('pac-input'));
+    map.controls[google.maps.ControlPosition.TOP_CENTER].push(document.getElementById('pac-input'));
+    google.maps.event.addListener(searchBox, 'places_changed', function() {
+        searchBox.set('map', null);
+
+        var places = searchBox.getPlaces();
+
+        var bounds = new google.maps.LatLngBounds();
+        var i, place;
+        for (i = 0; place = places[i]; i++) {
+            (function(place) {
+                var marker = new google.maps.Marker({
+
+                    position: place.geometry.location
+                });
+                marker.bindTo('map', searchBox, 'map');
+                google.maps.event.addListener(marker, 'map_changed', function() {
+                    if (!this.getMap()) {
+                        this.unbindAll();
+                    }
+                });
+                bounds.extend(place.geometry.location);
+
+
+            }(place));
+
+        }
+        map.fitBounds(bounds);
+        searchBox.set('map', map);
+        map.setZoom(Math.min(map.getZoom(),12));
+
+    });
+
+
 }
+
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.setPosition(pos);
