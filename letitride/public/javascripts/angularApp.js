@@ -139,7 +139,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
 function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 36.778259, lng: -119.417931}, //CA coordinates
-        zoom: 6
+        zoom: 15
     });
 
     //Geolocation stuff

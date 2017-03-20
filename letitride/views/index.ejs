@@ -52,19 +52,17 @@
              <p>We are not an uber clone</p>
          </div> 
          <center>
-          <div ng-hide="isLoggedIn()">
-            <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can request a ride.</h3>
-          </div>
          </center>
       </script>
 
       <!-- REQUEST A RIDE &callback=initMap -->
       <script type="text/ng-template" id="/ride.html">
-        <div style="margin: 50px; height:100%; width:100%" ng-show="isLoggedIn()">
-            <input id="pac-input" class="controls" type="text" placeholder="Search Box">
-          <div id="map"></div>
+        <input id="pac-input" class="controls" type="text" placeholder="Search Box" ng-show="isLoggedIn()">
+        <div id="map" ng-show="isLoggedIn()"></div>
+        <div ng-hide="isLoggedIn()">
+           <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can request a ride.</h3>
         </div>
-    </script>
+      </script>
 
       <!-- REGISTER -->
       <script type="text/ng-template" id="/register.html">
