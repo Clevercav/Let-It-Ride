@@ -29,7 +29,7 @@ a {
 
 /* Background image not working...*/
 .jumbotron{
-    background-image: url("../../img/img2.jpg");
+    /*background-image: url("../../images/map.png");*/
     margin-top:-20px;
     background-size: cover;
     background-repeat: no-repeat;
