@@ -11,6 +11,30 @@ router.get('/', function (req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.get('/views/login.html', function (req, res, next) {
+  res.sendFile('views/login.html', { root: "./" });
+});
+
+router.get('/views/ride.html', function (req, res, next) {
+  res.sendFile('views/ride.html', { root: "./" });
+});
+
+router.get('/views/register.html', function (req, res, next) {
+  res.sendFile('views/register.html', { root: "./" });
+});
+
+router.get('/views/information/home.html', function (req, res, next) {
+  res.sendFile('views/information/home.html', { root: "./" });
+});
+
+router.get('/views/information/about.html', function (req, res, next) {
+  res.sendFile('views/information/about.html', { root: "./" });
+});
+
+router.get('/views/information/contact.html', function (req, res, next) {
+  res.sendFile('views/information/contact.html', { root: "./" });
+});
+
 router.post('/login', function (req, res, next) {
   if (!req.body.username || !req.body.password) {
     return res.status(400).json({ message: 'Please fill out all fields' });

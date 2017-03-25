@@ -29,8 +29,8 @@
             <div class="collapse navbar-collapse" id="mainNavBar" ng-controller="NavCtrl">
                <ul class="nav navbar-nav">
                   <li><a href="#">Home</a></li>
-                  <li><a href="#about">About</a></li>
-                  <li><a href="#contact">Contact</a></li>
+                  <li><a href="/#/about">About</a></li>
+                  <li><a href="/#/contact">Contact</a></li>
                   <li ng-show="isLoggedIn()"><a href="/#/ride">Request a Ride</a></li>
                </ul>
                <ul class="nav navbar-nav pull-right">
@@ -44,94 +44,8 @@
       </nav>
       
       <ui-view></ui-view>
-
-      <!-- HOME -->
-      <script type="text/ng-template" id="/home.html">
-         <div class="jumbotron">
-             <h1>Welcome to LET IT RIDE</h1>
-             <p>We are not an uber clone</p>
-         </div> 
-         <center>
-         </center>
-      </script>
-
-      <!-- REQUEST A RIDE &callback=initMap -->
-      <script type="text/ng-template" id="/ride.html">
-        <input id="pac-input" class="controls" type="text" placeholder="Search Box" ng-show="isLoggedIn()">
-        <div id="map" ng-show="isLoggedIn()"></div>
-        <div ng-hide="isLoggedIn()">
-           <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can request a ride.</h3>
-        </div>
-      </script>
-
-      <!-- REGISTER -->
-      <script type="text/ng-template" id="/register.html">
-         
-         <div ng-show="error" class="alert alert-danger row">
-           <span>{{ error.message }}</span>
-         </div>
-         
-         <form ng-submit="register()"
-           style="margin-top:30px;">
-           <h3>Register</h3>
-         
-           <div class="form-group">
-             <input type="text"
-             class="form-control"
-             placeholder="Username"
-             ng-model="user.username"></input>
-           </div>
-           <div class="form-group">
-             <input type="password"
-             class="form-control"
-             placeholder="Password"
-             ng-model="user.password"></input>
-           </div>
-           <button type="submit" class="btn btn-primary">Register</button>
-         </form>
-      </script>
-
-      <!-- LOGIN -->
-      <script type="text/ng-template" id="/login.html">
-         
-         <div ng-show="error" class="alert alert-danger row">
-           <span>{{ error.message }}</span>
-         </div>
-         
-         <form ng-submit="logIn()"
-           style="margin-top:30px;">
-           <h3>Log In</h3>
-         
-           <div class="form-group">
-             <input type="text"
-             class="form-control"
-             placeholder="Username"
-             ng-model="user.username"></input>
-           </div>
-           <div class="form-group">
-             <input type="password"
-             class="form-control"
-             placeholder="Password"
-             ng-model="user.password"></input>
-           </div>
-           <button type="submit" class="btn btn-primary">Log In</button>
-         </form>
-      </script>
+      
       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRsRxSy0tifmCIR3QhMRIKFDpydVZEO2k&libraries=places&callback=initMap"
               async defer></script>   
    </body>
 </html>
-<!-- <div class="row">
-   <div class="col-sm-4">
-       <h3>Column 1</h3>
-       <p>Privacy</p>
-   </div>
-   <div class="col-sm-4">
-       <h3>Column 2</h3>
-       <p>Terms and conditions</p>
-   </div>
-   <div class="col-sm-4">
-       <h3>Column 3</h3>
-       <p>More stuff</p>
-   </div>
-   </div> -->
