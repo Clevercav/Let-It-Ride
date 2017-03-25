@@ -8,31 +8,31 @@ var auth = jwt({ secret: 'SECRET', userProperty: 'payload' });
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index');
 });
 
-router.get('/views/login.html', function (req, res, next) {
-  res.sendFile('views/login.html', { root: "./" });
+router.get('/login.html', function (req, res, next) {
+  res.sendFile('views/templates/user/login.html', { root: "./" });
 });
 
-router.get('/views/ride.html', function (req, res, next) {
-  res.sendFile('views/ride.html', { root: "./" });
+router.get('/ride.html', function (req, res, next) {
+  res.sendFile('views/templates/user/ride.html', { root: "./" });
 });
 
-router.get('/views/register.html', function (req, res, next) {
-  res.sendFile('views/register.html', { root: "./" });
+router.get('/register.html', function (req, res, next) {
+  res.sendFile('views/templates/user/register.html', { root: "./" });
 });
 
-router.get('/views/information/home.html', function (req, res, next) {
-  res.sendFile('views/information/home.html', { root: "./" });
+router.get('/home.html', function (req, res, next) {
+  res.sendFile('views/templates/information/home.html', { root: "./" });
 });
 
-router.get('/views/information/about.html', function (req, res, next) {
-  res.sendFile('views/information/about.html', { root: "./" });
+router.get('/about.html', function (req, res, next) {
+  res.sendFile('views/templates/information/about.html', { root: "./" });
 });
 
-router.get('/views/information/contact.html', function (req, res, next) {
-  res.sendFile('views/information/contact.html', { root: "./" });
+router.get('/contact.html', function (req, res, next) {
+  res.sendFile('views/templates/information/contact.html', { root: "./" });
 });
 
 router.post('/login', function (req, res, next) {

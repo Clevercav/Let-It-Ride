@@ -105,27 +105,27 @@ app.config(['$stateProvider', '$urlRouterProvider',
         $stateProvider
             .state('home', {
                 url: '/home',
-                templateUrl: 'views/information/home.html',
+                templateUrl: '/home.html',
                 controller: 'MainCtrl'
             })
             .state('contact', {
                 url: '/contact',
-                templateUrl: 'views/information/contact.html',
+                templateUrl: '/contact.html',
                 controller: 'MainCtrl'
             })
             .state('about', {
                 url: '/about',
-                templateUrl: 'views/information/about.html',
+                templateUrl: '/about.html',
                 controller: 'MainCtrl'
             })
             .state('ride', {
                 url: '/ride',
-                templateUrl: 'views/ride.html',
+                templateUrl: '/ride.html',
                 controller: 'RideCtrl'
             })
             .state('login', {
                 url: '/login',
-                templateUrl: '/views/login.html',
+                templateUrl: '/login.html',
                 controller: 'AuthCtrl',
                 onEnter: ['$state', 'auth', function ($state, auth) {
                     if (auth.isLoggedIn()) {
@@ -135,7 +135,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
             })
             .state('register', {
                 url: '/register',
-                templateUrl: 'views/register.html',
+                templateUrl: '/register.html',
                 controller: 'AuthCtrl',
                 onEnter: ['$state', 'auth', function ($state, auth) {
                     if (auth.isLoggedIn()) {
