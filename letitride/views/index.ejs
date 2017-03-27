@@ -12,6 +12,9 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.4.2/angular-ui-router.js"></script>
       <script src="/javascripts/angularApp.js"></script>
       <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+
+      <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+
    </head>
    <body ng-app="letitride">
       <nav class ="navbar navbar-inverse">
@@ -28,10 +31,10 @@
             <!-- Menu Items -->
             <div class="collapse navbar-collapse" id="mainNavBar" ng-controller="NavCtrl">
                <ul class="nav navbar-nav">
-                  <li><a href="#">Home</a></li>
-                  <li><a href="/#/about">About</a></li>
-                  <li><a href="/#/contact">Contact</a></li>
-                  <li ng-show="isLoggedIn()"><a href="/#/ride">Request a Ride</a></li>
+                  <li><a href="#"><i class="fa fa-home fa-fw" aria-hidden="true"></i>&nbsp; Home</a></li>
+                  <li><a href="/#/about"><i class="fa fa-check fa-fw" aria-hidden="true"></i>&nbsp; About</a></li>
+                  <li><a href="/#/contact"><i class="fa fa-user-circle-o fa-fw" aria-hidden="true"></i>&nbsp; Contact</a></li>
+                  <li ng-show="isLoggedIn()"><a href="/#/ride"><i class="fa fa-car fa-fw" aria-hidden="true"></i>&nbsp; Request a Ride</a></li>
                </ul>
                <ul class="nav navbar-nav pull-right">
                   <li ng-show="isLoggedIn()"><a>Welcome, {{ currentUser() }}</a></li>
@@ -46,6 +49,7 @@
       <ui-view></ui-view>
       
       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRsRxSy0tifmCIR3QhMRIKFDpydVZEO2k&libraries=places"
-              async defer></script>   
+              async defer></script>
+
    </body>
 </html>
