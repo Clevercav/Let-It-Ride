@@ -2,6 +2,10 @@ a {
   color: #00B7FF;
 }
 
+.bg-primary{
+    background-color: #00B7FF;
+}
+
 /* pac-input is the searchbox */
 #pac-input {
     background-color: #fff;
@@ -27,14 +31,14 @@ a {
     border-color: #8c8c8c;
 }
 
-/* Background image not working...*/
+
 .jumbotron{
-    /*background-image: url("../../images/map.png");*/
+    background-image: url("../../images/img2.jpg");
     margin-top:-20px;
     background-size: cover;
     background-repeat: no-repeat;
-    color: white;
-    text-shadow: black 0.3em 0.3em 0.3em;
+    color: black;
+    text-shadow: blue 0.3em 0.3em 0.3em;
     text-align:center;
     background-color: lightcoral;
 }
