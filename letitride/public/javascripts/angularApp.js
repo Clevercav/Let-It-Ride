@@ -147,16 +147,27 @@ app.config(['$stateProvider', '$urlRouterProvider',
     }]);
 
 function initMap() {
+    var directionsDisplay = new google.maps.DirectionsRenderer;
+    var directionsService = new google.maps.DirectionsService;
+
     var map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 36.778259, lng: -119.417931}, //CA coordinates
         zoom: 15
     });
 
+    directionsDisplay.setMap(map);
+    directionsDisplay.setPanel(document.getElementById('top-panel'));
+
+    var control = document.getElementById('floating-panel');
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(control);
+
+
     //Geolocation stuff
+    var pos;
     var infoWindow = new google.maps.InfoWindow({map: map});
     if (navigator.geolocation){
         navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
+            pos = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
@@ -172,7 +183,32 @@ function initMap() {
         handleLocationError(false, infoWindow, map.getCenter());
     }
 
-    //Search Function stuff
+    //add traffic to map
+    var trafficLayer = new google.maps.TrafficLayer();
+    trafficLayer.setMap(map);
+
+    //event added to button to get directions to a fixed place
+    var directionsButtonClick = function(){
+        calculateAndDisplayRoute(directionsService, directionsDisplay, pos);
+    };
+
+    document.getElementById('click').addEventListener('click', directionsButtonClick);
+
+    function calculateAndDisplayRoute(directionsService, directionsDisplay, pos) {
+        directionsService.route({
+            origin: pos,
+            destination: {lat: 37.3352, lng: -121.8811},
+            travelMode: google.maps.TravelMode.DRIVING
+        }, function(response, status) {
+            if (status === google.maps.DirectionsStatus.OK) {
+                directionsDisplay.setDirections(response);
+            } else {
+                window.alert('Directions request failed due to ' + status);
+            }
+        });
+    }
+
+    //Search Function stuff. Not sure how to update the pos so that when you search a location and get directions, it changes
     var searchBox = new google.maps.places.SearchBox(document.getElementById('pac-input'));
     map.controls[google.maps.ControlPosition.TOP_CENTER].push(document.getElementById('pac-input'));
     google.maps.event.addListener(searchBox, 'places_changed', function() {
@@ -181,6 +217,7 @@ function initMap() {
         var places = searchBox.getPlaces();
 
         var bounds = new google.maps.LatLngBounds();
+
         var i, place;
         for (i = 0; place = places[i]; i++) {
             (function(place) {
@@ -205,8 +242,6 @@ function initMap() {
         map.setZoom(Math.min(map.getZoom(),12));
 
     });
-
-
 }
 
 
