@@ -12,7 +12,7 @@ a {
     font-family: Roboto;
     font-size: 15px;
     font-weight: 300;
-    margin-left: 12px;
+    margin-left: 20px;
     margin-top: 20px;
     padding: 0 11px 0 13px;
     text-overflow: ellipsis;
@@ -31,6 +31,20 @@ a {
     border-color: #8c8c8c;
 }
 
+/*Floating panel is the panel next to search box with button*/
+#floating-panel {
+    position: absolute;
+    top: 10px;
+    left: 75%;
+    z-index: 5;
+    background-color: #fff;
+    padding: 5px;
+    border: 1px solid #999;
+    text-align: center;
+    font-family: 'Roboto','sans-serif';
+    line-height: 30px;
+    font-size:20px;
+}
 
 .jumbotron{
     background-image: url("../../images/img2.jpg");
