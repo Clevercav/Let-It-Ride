@@ -162,7 +162,7 @@ function initMap() {
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(control);
 
 
-    //Geolocation stuff
+    //Users current location
     var pos;
     var infoWindow = new google.maps.InfoWindow({map: map});
     if (navigator.geolocation){
@@ -193,11 +193,14 @@ function initMap() {
     };
 
     document.getElementById('click').addEventListener('click', directionsButtonClick);
+    
+    //When an address is found, the address's information (longitude, latitude) will be set to this variable.
+    var destinationPosition = null;
 
     function calculateAndDisplayRoute(directionsService, directionsDisplay, pos) {
         directionsService.route({
             origin: pos,
-            destination: {lat: 37.3352, lng: -121.8811},
+            destination: destinationPosition,
             travelMode: google.maps.TravelMode.DRIVING
         }, function(response, status) {
             if (status === google.maps.DirectionsStatus.OK) {
@@ -225,6 +228,7 @@ function initMap() {
 
                     position: place.geometry.location
                 });
+                
                 marker.bindTo('map', searchBox, 'map');
                 google.maps.event.addListener(marker, 'map_changed', function() {
                     if (!this.getMap()) {
@@ -233,6 +237,7 @@ function initMap() {
                 });
                 bounds.extend(place.geometry.location);
 
+                destinationPosition = place.geometry.location;
 
             }(place));
 
