@@ -6,12 +6,16 @@ a {
     background-color: white;
 }
 
-h1{
+h1, h3{
     font-family: "Californian FB", Helvetica, Arial, sans-serif;
 }
-h3{
+
+h4{
     font-family: "Californian FB", Helvetica, Arial, sans-serif;
+    font-size:22px;
 }
+
+
 
 .happyimg{
     display: table;
@@ -67,15 +71,18 @@ h3{
     font-size:20px;
 }
 
+#pay{
+    visibility: hidden;
+}
+
 .jumbotron{
     background-image: url("../../images/img2.jpg");
     margin-top:-20px;
     background-size: cover;
     background-repeat: no-repeat;
     color: black;
-    text-shadow: blue 0.3em 0.3em 0.3em;
+    text-shadow: crimson 0.3em 0.3em 0.3em;
     text-align:center;
-    background-color: lightcoral;
 
 }
 /* Always set the map height explicitly to define the size of the div
