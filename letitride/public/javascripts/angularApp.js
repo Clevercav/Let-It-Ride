@@ -201,7 +201,7 @@ function initMap() {
 
     //event added to button to get directions to a fixed place
     var directionsButtonClick = function () {
-        calculateAndDisplayRoute(directionsService, directionsDisplay, pos);
+        calculateAndDisplayRoute2(directionsService, directionsDisplay, pos);
     };
 
     var requestRide = function() {
@@ -217,7 +217,7 @@ function initMap() {
     }
 
     document.getElementById('click').addEventListener('click', requestRide);
-    document.getElementById('searchButton').addEventListener('searchButton', directionsButtonClick);
+    document.getElementById('searchButton').addEventListener('click', directionsButtonClick);
 
     var pay = document.getElementById('pay');
     document.getElementById('click').onclick = function () {
@@ -266,7 +266,7 @@ function initMap() {
 
     //Search Function stuff. Not sure how to update the pos so that when you search a location and get directions, it changes
     var searchBox = new google.maps.places.SearchBox(document.getElementById('pac-input'));
-    map.controls[google.maps.ControlPosition.TOP_CENTER].push(document.getElementById('pac-input'));
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(document.getElementById('pac-input'));
     google.maps.event.addListener(searchBox, 'places_changed', function () {
         searchBox.set('map', null);
 
