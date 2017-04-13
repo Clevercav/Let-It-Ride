@@ -6,6 +6,13 @@ a {
     background-color: white;
 }
 
+h1{
+    font-family: "Californian FB", Helvetica, Arial, sans-serif;
+}
+h3{
+    font-family: "Californian FB", Helvetica, Arial, sans-serif;
+}
+
 .happyimg{
     display: table;
     width: 100%;
@@ -69,6 +76,7 @@ a {
     text-shadow: blue 0.3em 0.3em 0.3em;
     text-align:center;
     background-color: lightcoral;
+
 }
 /* Always set the map height explicitly to define the size of the div
          * element that contains the map. */
