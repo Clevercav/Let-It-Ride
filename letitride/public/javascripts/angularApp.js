@@ -271,7 +271,7 @@ function initMap() {
                 searchTime = Math.round(response.routes[0].legs[0].duration.value / 60);
 
                 totalCost = calculateCost(searchDistance, searchTime);
-
+                document.getElementById('cost-info').innerHTML = "";
                 document.getElementById('cost-info').innerHTML += '$' + totalCost.toFixed(2);
 
             } else {
