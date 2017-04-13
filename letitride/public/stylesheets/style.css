@@ -75,6 +75,13 @@ h4{
     visibility: hidden;
 }
 
+#cost-info{
+    font-family: "Californian FB", Helvetica, Arial, sans-serif;
+    font-size: 22px;
+}
+
+
+
 .jumbotron{
     background-image: url("../../images/img2.jpg");
     margin-top:-20px;
