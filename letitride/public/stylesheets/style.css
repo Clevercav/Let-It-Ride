@@ -3,7 +3,21 @@ a {
 }
 
 .bg-primary{
-    background-color: #00B7FF;
+    background-color: white;
+}
+
+.happyimg{
+    display: table;
+    width: 100%;
+    height: 500px;
+    color: #fff;
+    background: url('../../images/handsonwheel.jpg') no-repeat fixed center;
+}
+
+.centertext {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
 }
 
 /* pac-input is the searchbox */
