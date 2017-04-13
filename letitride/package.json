@@ -1,12 +1,12 @@
 {
   "name": "letitride",
   "version": "0.0.0",
+  "engines": {
+    "node": "4.2.6"
+  },
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
-  },
-  "engines": {
-    "node": "4.2.6"
   },
   "dependencies": {
     "body-parser": "~1.16.0",
