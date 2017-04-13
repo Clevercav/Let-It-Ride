@@ -149,6 +149,10 @@ app.config(['$stateProvider', '$urlRouterProvider',
     }
 ]);
 
+var searchDistance;
+var searchTime;
+var driverTime;
+var totalCost = 0;
 function initMap() {
     var directionsDisplay = new google.maps.DirectionsRenderer;
     var directionsService = new google.maps.DirectionsService;
@@ -220,9 +224,10 @@ function initMap() {
     document.getElementById('searchButton').addEventListener('click', directionsButtonClick);
 
     var pay = document.getElementById('pay');
-    document.getElementById('click').onclick = function () {
+    document.getElementById('searchButton').onclick = function () {
         pay.style.visibility = "visible";
     }
+
 
     //When an address is found, the address's information (longitude, latitude) will be set to this variable.
     var destinationPosition = null;
@@ -239,6 +244,9 @@ function initMap() {
         }, function (response, status) {
             if (status === google.maps.DirectionsStatus.OK) {
                 directionsDisplay.setDirections(response);
+                driverTime = response.routes[0].legs[0].duration.value / 60;
+                driverTime.toFixed(2);
+
             } else {
                 window.alert('Directions request failed due to ' + status);
             }
@@ -246,6 +254,7 @@ function initMap() {
 
     }
 
+    //function for search address
     function calculateAndDisplayRoute2(directionsService, directionsDisplay, pos) {
         directionsService.route({
             origin: pos,
@@ -258,11 +267,21 @@ function initMap() {
         }, function(response, status) {
             if (status === google.maps.DirectionsStatus.OK) {
                 directionsDisplay.setDirections(response);
+                searchDistance = response.routes[0].legs[0].distance.value;
+                searchTime = Math.round(response.routes[0].legs[0].duration.value / 60);
+
+                totalCost = calculateCost(searchDistance, searchTime);
+
+                document.getElementById('cost-info').innerHTML += '$' + totalCost.toFixed(2);
+
             } else {
                 window.alert('Directions request failed due to ' + status);
             }
         });
     }
+
+
+
 
     //Search Function stuff. Not sure how to update the pos so that when you search a location and get directions, it changes
     var searchBox = new google.maps.places.SearchBox(document.getElementById('pac-input'));
@@ -394,13 +413,20 @@ function getRandomInRange(from, to, fixed) {
 function callDriver(){
     var cd = confirm('Call Driver?');
     if(cd){
-        var pay = confirm('Ride will cost x dollars');
-        if(pay){
-            alert("Driver will be here in " + "mins!");
+        if(totalCost == 0){
+            alert("Select destination first!");
         }
         else{
-            //do nothing
+            var pay = confirm("Ride will cost $" + totalCost.toFixed(2) + " dollars. Confirm payment?");
+
+            if(pay){
+                alert("Ride will take about " + searchTime + " minutes.");
+            }
+            else{
+                //do nothing
+            }
         }
+
     }
     else{
         //do nothing
@@ -408,8 +434,8 @@ function callDriver(){
 }
 
 function calculateCost(distanceTraveled, time){
-    var a = distanceTraveled * .8;
-    var b = time *.2;
+    var a = distanceTraveled * .00125;
+    var b = time *.0325;
     var c = a + b;
     return c;
 }
