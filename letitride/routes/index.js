@@ -19,6 +19,10 @@ router.get('/ride.html', function (req, res, next) {
   res.sendFile('views/templates/user/ride.html', { root: "./" });
 });
 
+router.get('/driver.html', function (req, res, next) {
+  res.sendFile('views/templates/user/driver.html', { root: "./" });
+});
+
 router.get('/register.html', function (req, res, next) {
   res.sendFile('views/templates/user/register.html', { root: "./" });
 });

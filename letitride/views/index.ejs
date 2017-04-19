@@ -34,6 +34,7 @@
                   <li><a href="/#/about"><i class="fa fa-check fa-fw" aria-hidden="true"></i>&nbsp; About</a></li>
                   <li><a href="/#/contact"><i class="fa fa-user-circle-o fa-fw" aria-hidden="true"></i>&nbsp; Contact</a></li>
                   <li ng-show="isLoggedIn()"><a href="/#/ride"><i class="fa fa-car fa-fw" aria-hidden="true"></i>&nbsp; Request a Ride</a></li>
+                  <li ng-show="isLoggedIn()"><a href="/#/driver"><i class="fa fa-car fa-fw" aria-hidden="true"></i>&nbsp; Driver's Page</a></li>
                </ul>
                <ul class="nav navbar-nav pull-right">
                   <li ng-show="isLoggedIn()"><a>Welcome, {{ currentUser() }}</a></li>

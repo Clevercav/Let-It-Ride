@@ -115,6 +115,11 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 templateUrl: '/contact.html',
                 controller: 'MainCtrl'
             })
+            .state('driver', {
+                url: '/driver',
+                templateUrl: '/driver.html',
+                controller: 'MainCtrl'
+            })
             .state('about', {
                 url: '/about',
                 templateUrl: '/about.html',
@@ -369,7 +374,7 @@ function findClosestDriver(driverList, userLat, userLng) {
         var lng = driverList[i].lng;
 
         function getTime() {
-            var res = httpGet("http://crossorigin.me/https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + lat + "," + lng + "&destinations=" + userLat + "%2C" + userLng + "&key=AIzaSyCRsRxSy0tifmCIR3QhMRIKFDpydVZEO2k");
+            var res = httpGet("https://crossorigin.me/https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + lat + "," + lng + "&destinations=" + userLat + "%2C" + userLng + "&key=AIzaSyCRsRxSy0tifmCIR3QhMRIKFDpydVZEO2k");
             time = res.rows[0].elements[0].duration.value;
         }
         setTimeout(getTime(), 1000);

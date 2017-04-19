@@ -9,7 +9,7 @@ var firebase = require('firebase');
 var mongoose = require('mongoose');
 require('./models/Users');
 require('./config/passport');
-mongoose.connect('mongodb://localhost/letitride');
+mongoose.connect('mongodb://group3:1234@ds153710.mlab.com:53710/letitride');
 
 var passport = require('passport');
 
