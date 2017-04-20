@@ -163,6 +163,7 @@ var searchDistance;
 var searchTime;
 var driverTime;
 var totalCost = 0;
+
 function initMap() {
     var directionsDisplay = new google.maps.DirectionsRenderer;
     var directionsService = new google.maps.DirectionsService;
@@ -176,7 +177,7 @@ function initMap() {
     });
 
     var arrayOfMarkers = null;
-    
+
     directionsDisplay.setMap(map);
     directionsDisplay.setPanel(document.getElementById('top-panel'));
 
@@ -218,7 +219,7 @@ function initMap() {
         calculateAndDisplayRoute2(directionsService, directionsDisplay, pos);
     };
 
-    var requestRide = function() {
+    var requestRide = function () {
         var closestDriver = findClosestDriver(arrayOfMarkers, pos.lat, pos.lng);
 
         //Temporary obj for the calculateAndDisplayRoute function. Dont worry about it
@@ -274,7 +275,7 @@ function initMap() {
                 departureTime: new Date(Date.now()),
                 trafficModel: 'pessimistic'
             }
-        }, function(response, status) {
+        }, function (response, status) {
             if (status === google.maps.DirectionsStatus.OK) {
                 directionsDisplay.setDirections(response);
                 searchDistance = response.routes[0].legs[0].distance.value;
@@ -365,7 +366,7 @@ function setRandomMarkers(map) {
 
         arr.push(marker);
     }
-    
+
     return arr;
 }
 
@@ -389,8 +390,8 @@ function findClosestDriver(driverList, userLat, userLng) {
 
     var closestDriver = driverList[0];
 
-    driverList.forEach(function(driver) {
-        if(driver.time < closestDriver.time) {
+    driverList.forEach(function (driver) {
+        if (driver.time < closestDriver.time) {
             closestDriver = driver;
         }
     })
@@ -407,11 +408,10 @@ function httpGetAsync(theUrl, callback) {
     xmlHttp.send(null);
 }
 
-function httpGet(theUrl)
-{
+function httpGet(theUrl) {
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
-    xmlHttp.send( null );
+    xmlHttp.open("GET", theUrl, false); // false for synchronous request
+    xmlHttp.send(null);
     return JSON.parse(xmlHttp.responseText);
 }
 
@@ -420,32 +420,29 @@ function getRandomInRange(from, to, fixed) {
     // .toFixed() returns string, so ' * 1' is a trick to convert to number
 }
 
-function callDriver(){
+function callDriver() {
     var cd = confirm('Call Driver?');
-    if(cd){
-        if(totalCost == 0){
+    if (cd) {
+        if (totalCost == 0) {
             alert("Select destination first!");
-        }
-        else{
+        } else {
             var pay = confirm("Ride will cost $" + totalCost.toFixed(2) + " dollars. Confirm payment?");
 
-            if(pay){
+            if (pay) {
                 alert("Ride will take about " + searchTime + " minutes.");
-            }
-            else{
+            } else {
                 //do nothing
             }
         }
 
-    }
-    else{
+    } else {
         //do nothing
     }
 }
 
-function calculateCost(distanceTraveled, time){
+function calculateCost(distanceTraveled, time) {
     var a = distanceTraveled * .00125;
-    var b = time *.0325;
+    var b = time * .0325;
     var c = a + b;
     return c;
 }
@@ -467,13 +464,13 @@ function initMapDriver() {
     var infoWindow = new google.maps.InfoWindow({
         map: map
     });
-    
+
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
             pos = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
-            };  
+            };
 
             infoWindow.setPosition(pos);
             infoWindow.setContent('You are here.');

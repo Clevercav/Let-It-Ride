@@ -1,15 +1,15 @@
 <div id="floating-panel">
-    <button id ="click" class="btn btn-default">Connect me to closest driver</button>
-    <button id ="searchButton" class="btn btn-default">Estimate Travel Time</button>
+    <button id="click" class="btn btn-default">Connect me to closest driver</button>
+    <button id="searchButton" class="btn btn-default">Estimate Travel Time</button>
 </div>
 
 
 <div id="dog">
-    <button id ="pay" value="pay" onclick="callDriver()" class="btn btn-default btn-lg">Call for a ride?</button>
+    <button id="pay" value="pay" onclick="callDriver()" class="btn btn-default btn-lg">Call for a ride?</button>
 </div>
 
 
-<div id="cost-info" >Estimated Cost of Ride: </div>
+<div id="cost-info">Estimated Cost of Ride: </div>
 
 
 
@@ -19,33 +19,6 @@
 
 <div id="top-panel"></div>
 
-
-<style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px Helvetica, Arial; }
-      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-      #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages li { padding: 5px 10px; }
-      #messages li:nth-child(odd) { background: #eee; }
-    </style>
-    <ul id="messages"></ul>
-    <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
-    </form>
-
-<script>
-    $(function () {
-    $('form').submit(function(){
-      socket.emit('chat message', $('#m').val());
-      $('#m').val('');
-      return false;
-    });
-  });
-</script>
-
 <div ng-hide="isLoggedIn()">
     <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can request a ride.</h3>
 </div>
-
