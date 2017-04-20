@@ -12,6 +12,11 @@ app.controller('RideCtrl', ['$scope', '$stateParams', 'auth', function ($scope, 
     initMap();
 }]);
 
+app.controller('DriverCtrl', ['$scope', '$stateParams', 'auth', function ($scope, $stateParams, auth) {
+    $scope.isLoggedIn = auth.isLoggedIn;
+    initMapDriver();
+}]);
+
 //AUTHENTICATION CONTROLLER
 app.controller('AuthCtrl', [
     '$scope',
@@ -118,7 +123,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
             .state('driver', {
                 url: '/driver',
                 templateUrl: '/driver.html',
-                controller: 'MainCtrl'
+                controller: 'DriverCtrl'
             })
             .state('about', {
                 url: '/about',
@@ -205,8 +210,8 @@ function initMap() {
     }
 
     //add traffic to map
-    var trafficLayer = new google.maps.TrafficLayer();
-    trafficLayer.setMap(map);
+    /*var trafficLayer = new google.maps.TrafficLayer();
+    trafficLayer.setMap(map); */
 
     //event added to button to get directions to a fixed place
     var directionsButtonClick = function () {
@@ -444,3 +449,42 @@ function calculateCost(distanceTraveled, time){
     var c = a + b;
     return c;
 }
+
+
+function initMapDriver() {
+    var map = new google.maps.Map(document.getElementById('map'), {
+        center: {
+            lat: 36.778259,
+            lng: -119.417931
+        }, //CA coordinates
+        zoom: 15
+    });
+
+    var trafficLayer = new google.maps.TrafficLayer();
+    trafficLayer.setMap(map);
+
+    var pos;
+    var infoWindow = new google.maps.InfoWindow({
+        map: map
+    });
+    
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };  
+
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('You are here.');
+            map.setCenter(pos);
+
+        }, function () {
+            handleLocationError(true, infoWindow, map.getCenter());
+        });
+    } else {
+        handleLocationError(false, infoWindow, map.getCenter());
+    }
+}
+
+var socket = io.connect('http://localhost:3000');
