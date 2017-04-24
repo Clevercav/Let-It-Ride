@@ -1,7 +1,21 @@
-<div class="jumbotron">
-    <h1>LET IT RIDE</h1>
-    <h3>Gotta go fast</h3>
+<div class="slideshow-container">
+    <div class="mySlides fade">
+        <img src='../images/slide1.jpg'  style="width:100%;" >
+        <div class="text">Get to your destination in a blink of an eye!</div>
+    </div>
+
+    <div class="mySlides fade">
+        <img src='../images/slide2.jpg' style="width:100%">
+        <div class="text">Our drivers are always happy.</div>
+    </div>
+
+    <div class="mySlides fade">
+        <img src='../images/slide3.jpg' style="width:100%">
+        <div class="text">Our drivers always have the newest and fastest cars.</div>
+    </div>
 </div>
+
+<br>
 
 <div class="bg-primary">
     <div class="container">
@@ -90,7 +104,6 @@
 
 <br>
 
-
 <footer>
     <div class="container">
         <div class="col-lg-12 text-center" style="color:black">
@@ -100,6 +113,19 @@
     </div>
 </footer>
 
+<script>
+    var slideIndex = 0;
+    carousel();
 
-
-
+    function carousel() {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        slideIndex++;
+        if (slideIndex > x.length) {slideIndex = 1}
+        x[slideIndex-1].style.display = "block";
+        setTimeout(carousel, 4000);
+    }
+</script>
