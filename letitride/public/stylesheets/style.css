@@ -15,14 +15,12 @@ h4{
     font-size:22px;
 }
 
-
-
 .happyimg{
     display: table;
     width: 100%;
     height: 500px;
     color: #fff;
-    background: url('../../images/handsonwheel.jpg') no-repeat fixed center;
+    background: url('../images/handsonwheel.jpg') no-repeat fixed center;
 }
 
 .centertext {
@@ -81,17 +79,52 @@ h4{
 }
 
 
+* {box-sizing:border-box}
 
-.jumbotron{
-    background-image: url("../../images/img2.jpg");
-    margin-top:-20px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    color: black;
-    text-shadow: crimson 0.3em 0.3em 0.3em;
-    text-align:center;
-
+/* Slideshow container */
+.slideshow-container {
+    max-width: 2000px;
+    position: relative;
+    margin: -20px;
 }
+
+.mySlides {
+    display: none;
+}
+
+/* Caption text */
+.text {
+    font-family: "Californian FB", Helvetica, Arial, sans-serif;
+    color: #f2f2f2;
+    font-size: 48px;
+    padding: 20px 12px;
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
+    text-align: center;
+    color:black
+}
+
+/* Fading animation */
+.fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1s;
+    animation-name: fade;
+    animation-duration: 4s;
+}
+
+@-webkit-keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+}
+
+@keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+}
+
+
+
 /* Always set the map height explicitly to define the size of the div
          * element that contains the map. */
         #map {
@@ -112,3 +145,4 @@ h4{
             margin-bottom: 10px;
             display: block;
         }
+
