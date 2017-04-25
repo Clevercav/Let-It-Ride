@@ -148,7 +148,7 @@ h4{
          * element that contains the map. */
         #map {
             height: 85%;
-            margin: auto;
+            margin: 1%;
         }
         /* Optional: Makes the sample page fill the window. */
         html, body {
