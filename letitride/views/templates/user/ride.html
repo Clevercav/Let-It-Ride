@@ -1,13 +1,40 @@
+ <script src="/socket.io/socket.io.js"></script>
+
+<script>
+  $(function () {
+    var socket = io();
+    var icon = "http://images.rammount.com/images/icons/activity/driving-min.png";
+        var driver1 = {
+        position: {
+            lat: 37.329766,
+            lng: -121.881487
+        },
+        map: map,
+        icon: icon
+    };
+    $('form').submit(function(){
+      socket.emit('requestRide', pos);
+      return false;
+    });
+    socket.on('chat message', function(msg){
+      $('#messages').append($('<li>').text(msg));
+    });
+  });
+</script>
+
 <div id="floating-panel">
-    <button id="click" class="btn btn-default">Connect me to closest driver</button>
     <button id="searchButton" class="btn btn-default">Estimate Travel Time</button>
 </div>
 
 
 <div id="dog">
+<form action="">
     <button id="pay" value="pay" onclick="callDriver()" class="btn btn-default btn-lg">Call for a ride?</button>
+    </form>
 </div>
 
+
+<!--<div id="cost-info">Estimated Cost of Ride: </div>-->>
 
 <div id="cost-info">Estimated Cost of Ride: </div>
 
@@ -15,7 +42,9 @@
 
 
 <input id="pac-input" class="controls" type="text" placeholder="Search Box" ng-show="isLoggedIn()">
-<div id="map" ng-show="isLoggedIn()"></div>
+<div id="map" ng-show="isLoggedIn()"></div> 
+
+
 
 <div id="top-panel"></div>
 

@@ -1,3 +1,62 @@
+<ul id="messages"></ul>
+
+<script>
+    $(function () {
+        var socket = io();
+
+        function calculateAndDisplayRoute(directionsService, directionsDisplay, userPos, driverPos) {
+            directionsService.route({
+                origin: driverPos,
+                destination: userPos,
+                travelMode: google.maps.TravelMode.DRIVING,
+                drivingOptions: {
+                    departureTime: new Date(Date.now()),
+                    trafficModel: 'pessimistic'
+                }
+            }, function (response, status) {
+                if (status === google.maps.DirectionsStatus.OK) {
+                    directionsDisplay.setDirections(response);
+                    driverTime = response.routes[0].legs[0].duration.value / 60;
+                    driverTime.toFixed(2);
+
+                } else {
+                    window.alert('Directions request failed due to ' + status);
+                }
+            });
+        }
+        $('form').submit(function () {
+            socket.emit('chat message', $('#m').val());
+            $('#m').val('');
+            return false;
+        });
+        socket.on('requestRide', function (userLocation) {
+            $('#messages').append($('<li>').text("New customer"));
+            console.log(userLocation);
+            var directionsDisplay = new google.maps.DirectionsRenderer;
+            var directionsService = new google.maps.DirectionsService;
+            var map = new google.maps.Map(document.getElementById('map'));
+            var position = {
+                lat: 37.329766,
+                lng: -121.881487
+            };
+
+            directionsDisplay.setMap(map);
+
+            var trafficLayer = new google.maps.TrafficLayer();
+            trafficLayer.setMap(map);
+
+            calculateAndDisplayRoute(directionsService, directionsDisplay, userLocation, position);
+
+            socket.on('destination', function (destination) {
+                calculateAndDisplayRoute(directionsService, directionsDisplay, destination,
+                    userLocation);
+                directionsDisplay.setMap(map);
+            });
+
+        });
+    });
+</script>
+
 <div id="map" ng-show="isLoggedIn()"></div>
 
 <div ng-hide="isLoggedIn()">

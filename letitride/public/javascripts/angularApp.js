@@ -163,6 +163,19 @@ var searchDistance;
 var searchTime;
 var driverTime;
 var totalCost = 0;
+var pos;
+var user_positiion;
+var destinationPosition = null;
+
+var icon = "http://images.rammount.com/images/icons/activity/driving-min.png";
+var driver1 = {
+    position: {
+        lat: 37.329766,
+        lng: -121.881487
+    },
+    map: map,
+    icon: icon
+};
 
 function initMap() {
     var directionsDisplay = new google.maps.DirectionsRenderer;
@@ -184,9 +197,10 @@ function initMap() {
     var control = document.getElementById('floating-panel');
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(control);
 
+    var test = new google.maps.Marker(driver1);
+
 
     //Users current location
-    var pos;
     var infoWindow = new google.maps.InfoWindow({
         map: map
     });
@@ -200,8 +214,9 @@ function initMap() {
             infoWindow.setPosition(pos);
             infoWindow.setContent('You are here.');
             map.setCenter(pos);
+            user_positiion = pos;
 
-            arrayOfMarkers = setRandomMarkers(map);
+            //arrayOfMarkers = setRandomMarkers(map);
 
         }, function () {
             handleLocationError(true, infoWindow, map.getCenter());
@@ -220,18 +235,18 @@ function initMap() {
     };
 
     var requestRide = function () {
-        var closestDriver = findClosestDriver(arrayOfMarkers, pos.lat, pos.lng);
+        //var closestDriver = findClosestDriver(arrayOfMarkers, pos.lat, pos.lng);
 
         //Temporary obj for the calculateAndDisplayRoute function. Dont worry about it
         var obj = {
-            lat: closestDriver.lat,
-            lng: closestDriver.lng
+            lat: driver1.position.lat,
+            lng: driver1.position.lng
         }
 
         calculateAndDisplayRoute(directionsService, directionsDisplay, pos, obj);
     }
 
-    document.getElementById('click').addEventListener('click', requestRide);
+    //document.getElementById('click').addEventListener('click', requestRide);
     document.getElementById('searchButton').addEventListener('click', directionsButtonClick);
 
     var pay = document.getElementById('pay');
@@ -283,7 +298,8 @@ function initMap() {
 
                 totalCost = calculateCost(searchDistance, searchTime);
                 document.getElementById('cost-info').innerHTML = "";
-                document.getElementById('cost-info').innerHTML += '$' + totalCost.toFixed(2);
+                document.getElementById('cost-info').innerHTML += 'Estimated Cost of Ride: ' + '$' + totalCost.toFixed(2);
+                //document.getElementById('cost-info').innerHTML += '$' + totalCost.toFixed(2);
 
             } else {
                 window.alert('Directions request failed due to ' + status);
@@ -331,6 +347,11 @@ function initMap() {
 
     });
 }
+
+var socket = io();
+socket.on('requestRide', function (msg) {
+    socket.emit('destination', destinationPosition);
+});
 
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -420,6 +441,8 @@ function getRandomInRange(from, to, fixed) {
     // .toFixed() returns string, so ' * 1' is a trick to convert to number
 }
 
+var total_pay;
+
 function callDriver() {
     var cd = confirm('Call Driver?');
     if (cd) {
@@ -427,7 +450,7 @@ function callDriver() {
             alert("Select destination first!");
         } else {
             var pay = confirm("Ride will cost $" + totalCost.toFixed(2) + " dollars. Confirm payment?");
-
+            total_pay = pay;
             if (pay) {
                 alert("Ride will take about " + searchTime + " minutes.");
             } else {
@@ -456,6 +479,15 @@ function initMapDriver() {
         }, //CA coordinates
         zoom: 15
     });
+    var icon = "http://images.rammount.com/images/icons/activity/driving-min.png";
+    var driver1 = {
+        position: {
+            lat: 37.329766,
+            lng: -121.881487
+        },
+        map: map,
+        icon: icon
+    };
 
     var trafficLayer = new google.maps.TrafficLayer();
     trafficLayer.setMap(map);
@@ -468,12 +500,18 @@ function initMapDriver() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
             pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
+                lat: driver1.position.lat,
+                lng: driver1.position.lng
             };
 
-            infoWindow.setPosition(pos);
-            infoWindow.setContent('You are here.');
+            var Marker = new google.maps.Marker({
+                position: pos,
+                map: map,
+                icon: icon
+            });
+            //infoWindow.setPosition(pos);
+            //infoWindow.setContent('You are here.');
+
             map.setCenter(pos);
 
         }, function () {
