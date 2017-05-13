@@ -4,14 +4,13 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var firebase = require('firebase');
+var passport = require('passport');
+//var firebase = require('firebase');
 
 var mongoose = require('mongoose');
 require('./models/Users');
 require('./config/passport');
 mongoose.connect('mongodb://group3:1234@ds153710.mlab.com:53710/letitride');
-
-var passport = require('passport');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -27,7 +26,7 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-  extended: false
+    extended: false
 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -36,21 +35,22 @@ app.use('/', index);
 app.use('/users', users);
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+app.use(function(req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 
 // error handler
-app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+app.use(function(err, req, res, next) {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+    // render the error page
+    if (res.status(err.status || 500))
+        return res.status(500).json({ message: 'Username Exists' });;
+    res.render('error');
 });
 
 module.exports = app;
